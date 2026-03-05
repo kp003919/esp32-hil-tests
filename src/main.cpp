@@ -137,6 +137,7 @@ void loop() {
             Serial.println("[TEST] PONG");
         } 
         // Add more command handling as needed  
+        // comment to be seen in ci 
     }
 
     // ---------------- USB Serial Test Interface (Python) ----------------
