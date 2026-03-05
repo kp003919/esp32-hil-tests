@@ -138,6 +138,8 @@ void loop() {
         } 
         // Add more command handling as needed  
         // comment to be seen in ci 
+        // For example, you could add commands to trigger specific actions on the ESP32 based on the data received from the STM32, such as controlling actuators, changing sensor reading intervals, or sending specific telemetry data back to the STM32.  
+        
     }
 
     // ---------------- USB Serial Test Interface (Python) ----------------
