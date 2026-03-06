@@ -1,0 +1,40 @@
+name: ESP32 HIL Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  hil_teststop:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          pip install pytest pyserial
+
+      - name: Install PlatformIO
+        run: |
+          pip install platformio
+
+      - name: Build ESP32 firmware
+        run: |
+          pio run
+
+      - name: Flash ESP32 firmware
+        run: |
+          pio run -t upload
+
+      - name: Run HIL tests
+        run: |
+          pytest -v
