@@ -5,7 +5,7 @@ stages:
 image: python:3.11
 
 before_script:
-  - pip install platformio pytest
+  - pip install platformio pytest pyserial
 
 build_firmware:
   stage: build
@@ -19,6 +19,6 @@ build_firmware:
 run_tests:
   stage: test
   script:
-    - pytest tests
+    - pytest -m "not hil"
   needs:
     - build_firmware

@@ -47,15 +47,17 @@ def send_test(ser, cmd, max_ms=300):
 
 
 # --------------------------
-# Test Cases
+# HIL Test Cases
 # --------------------------
 
+@pytest.mark.hil
 def test_ping(ser):
     resp, latency = send_test(ser, "PING", max_ms=150)
     assert "PONG" in resp
     assert latency < 150
 
 
+@pytest.mark.hil
 def test_uptime(ser):
     resp, latency = send_test(ser, "TEST_UPTIME", max_ms=200)
     parts = resp.split()
@@ -65,6 +67,7 @@ def test_uptime(ser):
     assert latency < 200
 
 
+@pytest.mark.hil
 def test_dht(ser):
     resp, latency = send_test(ser, "TEST_DHT", max_ms=500)
     dht = extract_json(resp)
@@ -75,6 +78,7 @@ def test_dht(ser):
     assert latency < 500
 
 
+@pytest.mark.hil
 def test_gps(ser):
     resp, latency = send_test(ser, "TEST_GPS", max_ms=300)
     gps = extract_json(resp)
@@ -84,16 +88,16 @@ def test_gps(ser):
     assert latency < 300
 
 
+@pytest.mark.hil
 def test_rtls(ser):
     resp, latency = send_test(ser, "TEST_RTLS", max_ms=300)
     rtls = extract_json(resp)
     assert "rtls" in rtls
     assert isinstance(rtls["rtls"], list)
-    
 
 
+@pytest.mark.hil
 def test_pulse(ser):
     resp, latency = send_test(ser, "TEST_PULSE", max_ms=200)
     assert "PULSE_DONE" in resp
     assert latency < 200
-  
