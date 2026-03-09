@@ -17,7 +17,7 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       - name: Install Python dependencies
         run: |
@@ -27,13 +27,22 @@ jobs:
         run: |
           pip install platformio
 
-      - name: Build ESP32 firmware
+      - name: Build HIL test firmware
         run: |
-          pio run
+          pio run -e hil_test
 
-      - name: Flash ESP32 firmware
+      - name: Flash HIL test firmware
         run: |
-          pio run -t upload
+          pio run -e hil_test -t upload
+
+      - name: Start Mosquitto MQTT broker
+        run: |
+          cd "C:\Program Files\mosquitto"
+          start "" "mosquitto.exe" -c "mosquitto_local.conf" -v
+
+      - name: Wait for ESP32 reboot
+        run: |
+          timeout /t 5
 
       - name: Run HIL tests
         run: |

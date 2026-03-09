@@ -39,7 +39,6 @@
 // Comms layer (Node‑RED only)
 #include "comms/WiFiMQTT.h"
 
-
 // Timers
 unsigned long lastDHT  = 0;
 unsigned long lastGPS  = 0;
@@ -87,8 +86,11 @@ void setup() {
     Serial.begin(115200);
     delay(1000);
     Serial.println("\nBooting...");
+    #ifdef HIL_TEST_MODE
+    startHilTestMode();
+    return;   // never run production code
+    #endif
     
-
     // Start sensors
     Sensors_begin();
     GPS_begin(); // enable when GPS is ready
